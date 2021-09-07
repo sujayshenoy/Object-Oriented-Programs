@@ -17,18 +17,23 @@ public class JsonInventory {
 
             JSONObject inventory = (JSONObject) obj;
             JSONArray array = (JSONArray) inventory.get("inventory");
-            
+
             Iterator<JSONObject> iterator = array.iterator();
             while (iterator.hasNext()) {
                 JSONObject item = iterator.next();
                 out.println("Type: " + item.get("type"));
                 out.println("Name: " + item.get("name"));
-                out.println("Weight: " + item.get("weight"));
-                out.println("Price per KG: " + item.get("pricePerKG"));
+                double weight = (double)item.get("weight");
+                double pricePerKG = (double)item.get("pricePerKG");
+                out.println("Weight: " + weight);
+                out.println("Price per KG: " + pricePerKG);
+                out.println("Total Price: "+ weight*pricePerKG);
                 out.println();
             }
 
-        } catch (Exception e) {
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
