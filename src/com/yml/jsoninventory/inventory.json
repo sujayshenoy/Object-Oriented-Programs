@@ -1,40 +1,40 @@
 {
-    "inventory": [
-        {
-            "type": "rice",
-            "name":"Basmati Rice",
-            "weight":"1 kg",
-            "pricePerKG":200
-        },
-        {
-            "type": "rice",
-            "name":"Kolam",
-            "weight":"500 g",
-            "pricePerKG":150
-        },
-        {
-            "type": "pulses",
-            "name":"Kidney Beans",
-            "weight":"100 g",
-            "pricePerKG":50
-        },
-        {
-            "type": "pulses",
-            "name":"Black Gram",
-            "weight":"500 g",
-            "pricePerKG":100
-        },
-        {
-            "type": "wheat",
-            "name":"Common Wheat",
-            "weight":"1 kg",
-            "pricePerKG":70
-        },
-        {
-            "type": "wheat",
-            "name":"Emmer Wheat",
-            "weight":"1 kg",
-            "pricePerKG":80
-        }
-    ]
+  "inventory": [
+    {
+      "type": "rice",
+      "name": "Basmati Rice",
+      "weight": 10.0,
+      "pricePerKG": 200.0
+    },
+    {
+      "type": "rice",
+      "name": "Kolam",
+      "weight": 5.0,
+      "pricePerKG": 150.0
+    },
+    {
+      "type": "pulses",
+      "name": "Kidney Beans",
+      "weight": 6.5,
+      "pricePerKG": 50.0
+    },
+    {
+      "type": "pulses",
+      "name": "Black Gram",
+      "weight": 7.2,
+      "pricePerKG": 100.0
+    },
+    {
+      "type": "wheat",
+      "name": "Common Wheat",
+      "weight": 3.0,
+      "pricePerKG": 70.0
+    },
+    {
+      "type": "wheat",
+      "name": "Emmer Wheat",
+      "weight": 2.0,
+      "pricePerKG": 80.0
+    }
+  ]
 }
