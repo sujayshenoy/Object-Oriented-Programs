@@ -8,7 +8,8 @@ import org.json.simple.parser.*;
 public class JsonInventory {
     public static void run() {
         FileReader reader;
-        PrintWriter out = new PrintWriter(System.out,true);
+        PrintWriter out = new PrintWriter(System.out, true);
+        Map<String, Double> priceMap = new HashMap<String,Double>();
 
         try {
             reader = new FileReader("src/com/yml/jsoninventory/inventory.json");
@@ -21,15 +22,16 @@ public class JsonInventory {
             Iterator<JSONObject> iterator = array.iterator();
             while (iterator.hasNext()) {
                 JSONObject item = iterator.next();
-                out.println("Type: " + item.get("type"));
-                out.println("Name: " + item.get("name"));
-                double weight = (double)item.get("weight");
-                double pricePerKG = (double)item.get("pricePerKG");
-                out.println("Weight: " + weight);
-                out.println("Price per KG: " + pricePerKG);
-                out.println("Total Price: "+ weight*pricePerKG);
-                out.println();
+                String name = (String) item.get("name");
+                double weight = (double) item.get("weight");
+                double pricePerKG = (double) item.get("pricePerKG");
+                double totalPrice = weight * pricePerKG;
+                priceMap.put(name, totalPrice);
             }
+            
+            JSONObject finalJSON = new JSONObject();
+            finalJSON.putAll(priceMap);
+            out.println(finalJSON.toJSONString());
 
         } catch (ParseException e) {
             e.printStackTrace();
