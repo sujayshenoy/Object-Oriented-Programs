@@ -12,6 +12,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 public class StockAccount implements StockProcessor {
+    private final String STOCKS_FILE = "data/stocks.json";
+
     private String fileName;
     private JSONArray stocksData;
     List<CompanyShare> companyShares = new ArrayList<CompanyShare>();
@@ -58,7 +60,11 @@ public class StockAccount implements StockProcessor {
 
     @Override
     public double valueof() {
-        return 0;
+        double value = 0;
+        for (CompanyShare companyShare : companyShares) {
+            value += valueof(companyShare);
+        }  
+        return value;
     }
 
     @Override
@@ -98,6 +104,7 @@ public class StockAccount implements StockProcessor {
     }
 
     private void updateValue(String symbol, long numberOfShares, CompanyShare companyShare, String state) {
+        readJSON();
         //Add transaction to CompanyShare Object
         long prevShares = companyShare.getNumberOfShares();
         if (state == Transaction.BUY) {
@@ -130,7 +137,7 @@ public class StockAccount implements StockProcessor {
         }
 
         try {
-            FileWriter writer = new FileWriter("data/stocks.json");
+            FileWriter writer = new FileWriter(STOCKS_FILE);
             JSONObject result = new JSONObject();
             result.put("stocks", stocksData);
             writer.write(result.toJSONString());
@@ -144,6 +151,7 @@ public class StockAccount implements StockProcessor {
 
     @Override
     public void sell(int amount, String symbol) {
+        readJSON();
         PrintWriter out = new PrintWriter(System.out);
         long numberOfShares = 0;
 
@@ -208,13 +216,36 @@ public class StockAccount implements StockProcessor {
 
     @Override
     public void printReport() {
-        // TODO Auto-generated method stub
-        
+        PrintWriter out = new PrintWriter(System.out, true);
+        out.println("Stock Report");
+        out.println("Holding Shares\n");
+        for (CompanyShare companyShare : companyShares) {
+            out.println("Share Symbol : " + companyShare.getStockSymbol());
+            out.println("Number of Shares Holding : " + companyShare.getNumberOfShares());
+            out.println("Value of each share : " + valueof(companyShare)/companyShare.getNumberOfShares());
+            out.println("Total Share Value : " + valueof(companyShare));
+            out.println();
+        }
+        out.println("Total Value of portfolio: " + valueof());
     }
     
+    public double valueof(CompanyShare companyShare) {
+        readJSON();
+        Iterator<JSONObject> itr = stocksData.iterator();
+        double sharePrice = 0.0;
+        while (itr.hasNext()) {
+            JSONObject stock = itr.next();
+            if (stock.get("stockSymbol").equals(companyShare.getStockSymbol())) {
+                sharePrice = (double) stock.get("sharePrice");
+            }
+        }
+        
+        return sharePrice * companyShare.getNumberOfShares();
+    }
+
     private void readJSON(){
         try{
-            FileReader reader = new FileReader("data/stocks.json");
+            FileReader reader = new FileReader(STOCKS_FILE);
             JSONParser parser = new JSONParser();
             JSONObject obj = (JSONObject) parser.parse(reader);
             stocksData = (JSONArray) obj.get("stocks");
