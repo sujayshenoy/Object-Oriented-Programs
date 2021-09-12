@@ -1,0 +1,28 @@
+{
+  "stocks": [
+    {
+      "stockName": "Infosys",
+      "stockSymbol": "$I",
+      "numberOfShares": 200,
+      "sharePrice": 1500.0
+    },
+    {
+      "stockName": "RedBus",
+      "stockSymbol": "$R",
+      "numberOfShares": 150,
+      "sharePrice": 800.0
+    },
+    {
+      "stockName": "TCS",
+      "stockSymbol": "$T",
+      "numberOfShares": 180,
+      "sharePrice": 1200.0
+    },
+    {
+      "stockName": "JetAirways",
+      "stockSymbol": "$J",
+      "numberOfShares": 120,
+      "sharePrice": 1000.0
+    }
+  ]
+}
