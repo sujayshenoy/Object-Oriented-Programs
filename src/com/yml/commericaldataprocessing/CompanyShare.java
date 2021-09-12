@@ -26,6 +26,14 @@ public class CompanyShare {
         transactions.add(transaction);
     }
 
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+
     public String getStockSymbol() {
         return stockSymbol;
     }

@@ -1,0 +1,97 @@
+{
+  "companyShares": [
+    {
+      "stockSymbol": "$I",
+      "numberOfShares": 120,
+      "transactions": [
+        {
+          "State": "buy",
+          "numberOfShares": 20,
+          "DateTime": "Sun Sep 12 23:48:34 IST 2021"
+        },
+        {
+          "State": "sell",
+          "numberOfShares": 10,
+          "DateTime": "Sun Sep 12 23:48:34 IST 2021"
+        },
+        {
+          "State": "buy",
+          "numberOfShares": 20,
+          "DateTime": "Sun Sep 12 23:56:49 IST 2021"
+        },
+        {
+          "State": "sell",
+          "numberOfShares": 10,
+          "DateTime": "Sun Sep 12 23:56:49 IST 2021"
+        },
+        {
+          "State": "buy",
+          "numberOfShares": 200,
+          "DateTime": "Sun Sep 12 23:57:26 IST 2021"
+        },
+        {
+          "State": "sell",
+          "numberOfShares": 100,
+          "DateTime": "Sun Sep 12 23:57:26 IST 2021"
+        }
+      ]
+    },
+    {
+      "stockSymbol": "$R",
+      "numberOfShares": 41,
+      "transactions": [
+        {
+          "State": "buy",
+          "numberOfShares": 40,
+          "DateTime": "Sun Sep 12 23:48:34 IST 2021"
+        },
+        {
+          "State": "sell",
+          "numberOfShares": 20,
+          "DateTime": "Sun Sep 12 23:48:34 IST 2021"
+        },
+        {
+          "State": "buy",
+          "numberOfShares": 40,
+          "DateTime": "Sun Sep 12 23:56:49 IST 2021"
+        },
+        {
+          "State": "sell",
+          "numberOfShares": 20,
+          "DateTime": "Sun Sep 12 23:56:49 IST 2021"
+        },
+        {
+          "State": "buy",
+          "numberOfShares": 2,
+          "DateTime": "Sun Sep 12 23:57:26 IST 2021"
+        },
+        {
+          "State": "sell",
+          "numberOfShares": 1,
+          "DateTime": "Sun Sep 12 23:57:26 IST 2021"
+        }
+      ]
+    },
+    {
+      "stockSymbol": "$T",
+      "numberOfShares": 60,
+      "transactions": [
+        {
+          "State": "buy",
+          "numberOfShares": 20,
+          "DateTime": "Sun Sep 12 23:48:34 IST 2021"
+        },
+        {
+          "State": "buy",
+          "numberOfShares": 20,
+          "DateTime": "Sun Sep 12 23:56:49 IST 2021"
+        },
+        {
+          "State": "buy",
+          "numberOfShares": 20,
+          "DateTime": "Sun Sep 12 23:57:26 IST 2021"
+        }
+      ]
+    }
+  ]
+}

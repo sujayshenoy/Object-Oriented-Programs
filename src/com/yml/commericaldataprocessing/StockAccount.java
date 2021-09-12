@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import org.json.simple.JSONArray;
@@ -19,6 +20,42 @@ public class StockAccount implements StockProcessor {
         this.fileName = fileName;
     }
 
+    public void initializeAccountFromFile(){
+        try {
+            List<CompanyShare> companySharesList = new ArrayList<CompanyShare>();
+            FileReader reader = new FileReader(fileName);
+            JSONParser parser = new JSONParser();
+            JSONObject obj = (JSONObject) parser.parse(reader);
+            JSONArray companyShares = (JSONArray) obj.get("companyShares");
+            Iterator<JSONObject> itr = companyShares.iterator();
+            while (itr.hasNext()) {
+                CompanyShare companyShare = new CompanyShare();
+                JSONObject compShare = itr.next();
+                companyShare.setStockSymbol(compShare.get("stockSymbol").toString());
+                companyShare.setNumberOfShares((long) compShare.get("numberOfShares"));
+
+                JSONArray transactions = (JSONArray) compShare.get("transactions");
+                Iterator<JSONObject> itr2 = transactions.iterator();
+
+                List<Transaction> transactionList = new ArrayList<Transaction>();
+                while (itr2.hasNext()) {
+                    Transaction transact = new Transaction();
+                    JSONObject transaction = itr2.next();
+                    transact.setDateTime(transaction.get("DateTime").toString());
+                    transact.setNumberOfShares((long) transaction.get("numberOfShares"));
+                    transact.setState((String) transaction.get("State"));
+                    transactionList.add(transact);
+                }
+
+                companyShare.setTransactions(transactionList);
+                companySharesList.add(companyShare);
+            }
+            this.companyShares = companySharesList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public double valueof() {
         return 0;
@@ -28,7 +65,7 @@ public class StockAccount implements StockProcessor {
     public void buy(int amount, String symbol) {
         readJSON();
         Iterator<JSONObject> itr = stocksData.iterator();
-        PrintWriter out = new PrintWriter(System.out);
+        PrintWriter out = new PrintWriter(System.out,true);
 
         long numberOfShares = 0;
         while (itr.hasNext()) {
@@ -71,7 +108,7 @@ public class StockAccount implements StockProcessor {
         }
         long millis = System.currentTimeMillis();
         Date dateTime = new Date(millis);
-        Transaction transaction = new Transaction(dateTime, numberOfShares, state);
+        Transaction transaction = new Transaction(dateTime.toString(), numberOfShares, state);
         companyShare.addTransaction(transaction);
         companyShares.add(companyShare);
 
@@ -120,19 +157,53 @@ public class StockAccount implements StockProcessor {
             out.println("Insufficient Shares available");
         }
         else {
+            CompanyShare selectedShare = null;
             for (CompanyShare companyShare : companyShares) {
                 if (companyShare.getStockSymbol().equals(symbol)) {
-                    updateValue(symbol, amount,companyShare, Transaction.SELL);
+                    selectedShare = companyShare;
+                    companyShares.remove(companyShare);
+                    break;
                 }
             }
-    
+
+            if (selectedShare != null) {
+                updateValue(symbol, amount, selectedShare, Transaction.SELL);
+            }
         }
     }
 
     @Override
     public void save(String filename) {
-        // TODO Auto-generated method stub
-        
+        JSONArray compShares = new JSONArray();
+        for (CompanyShare companyShare : companyShares) {
+            String stockSymbol = companyShare.getStockSymbol();
+            long numberOfShares = companyShare.getNumberOfShares();
+            JSONArray transactions = new JSONArray();
+            for (Transaction transaction : companyShare.getTransactions()) {
+                JSONObject transactionObject = new JSONObject();
+                transactionObject.put("DateTime", transaction.getDateTime().toString());
+                transactionObject.put("numberOfShares", transaction.getNumberOfShares());
+                transactionObject.put("State", transaction.getState());
+                transactions.add(transactionObject);
+            }
+            JSONObject obj = new JSONObject();
+            obj.put("stockSymbol", stockSymbol);
+            obj.put("numberOfShares", numberOfShares);
+            obj.put("transactions", transactions);
+            compShares.add(obj);
+       }
+
+        JSONObject finalJSON = new JSONObject();
+        finalJSON.put("companyShares", compShares);
+
+       try {
+           FileWriter writer = new FileWriter(filename);
+           writer.write(finalJSON.toJSONString());
+           writer.flush();
+           writer.close();
+       } catch (Exception e) {
+           e.printStackTrace();
+       }       
     }
 
     @Override

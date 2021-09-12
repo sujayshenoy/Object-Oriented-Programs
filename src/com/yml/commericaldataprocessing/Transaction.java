@@ -6,7 +6,7 @@ public class Transaction {
     final static String BUY = "buy";
     final static String SELL = "sell";
 
-    private Date dateTime;
+    private String dateTime;
     private long numberOfShares;
     private String state;
 
@@ -14,7 +14,7 @@ public class Transaction {
         
     }
 
-    Transaction(Date dateTime, long numberOfShares, String state) {
+    Transaction(String dateTime, long numberOfShares, String state) {
         this.dateTime = dateTime;
         this.numberOfShares = numberOfShares;
         this.state = state;
@@ -28,11 +28,11 @@ public class Transaction {
         this.state = state;
     }
 
-    public Date getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(Date dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 
