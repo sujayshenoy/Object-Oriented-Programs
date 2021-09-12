@@ -3,26 +3,26 @@
     {
       "stockName": "Infosys",
       "stockSymbol": "$I",
-      "numberOfShares": 200,
-      "sharePrice": 1500.0
+      "sharePrice": 1500.0,
+      "numberOfShares": 200
     },
     {
       "stockName": "RedBus",
       "stockSymbol": "$R",
-      "numberOfShares": 150,
-      "sharePrice": 800.0
+      "sharePrice": 800.0,
+      "numberOfShares": 150
     },
     {
       "stockName": "TCS",
       "stockSymbol": "$T",
-      "numberOfShares": 180,
-      "sharePrice": 1200.0
+      "sharePrice": 1200.0,
+      "numberOfShares": 180
     },
     {
       "stockName": "JetAirways",
       "stockSymbol": "$J",
-      "numberOfShares": 120,
-      "sharePrice": 1000.0
+      "sharePrice": 1000.0,
+      "numberOfShares": 120
     }
   ]
 }
