@@ -12,7 +12,7 @@ public class JsonInventory {
         Map<String, Double> priceMap = new HashMap<String,Double>();
 
         try {
-            reader = new FileReader("src/com/yml/jsoninventory/inventory.json");
+            reader = new FileReader("data/inventory.json");
             JSONParser parser = new JSONParser();
             Object obj = parser.parse(reader);
 

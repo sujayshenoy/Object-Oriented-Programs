@@ -1,0 +1,118 @@
+{
+  "inventories": [
+    [
+      {
+        "type": "rice",
+        "name": "Basmati Rice",
+        "weight": 10.0,
+        "pricePerKG": 200.0
+      },
+      {
+        "type": "rice",
+        "name": "Kolam",
+        "weight": 5.0,
+        "pricePerKG": 150.0
+      },
+      {
+        "type": "pulses",
+        "name": "Kidney Beans",
+        "weight": 6.5,
+        "pricePerKG": 50.0
+      },
+      {
+        "type": "pulses",
+        "name": "Black Gram",
+        "weight": 7.2,
+        "pricePerKG": 100.0
+      },
+      {
+        "type": "wheat",
+        "name": "Common Wheat",
+        "weight": 3.0,
+        "pricePerKG": 70.0
+      },
+      {
+        "type": "wheat",
+        "name": "Emmer Wheat",
+        "weight": 2.0,
+        "pricePerKG": 80.0
+      }
+    ],
+    [
+      {
+        "type": "rice",
+        "name": "Basmati Rice",
+        "weight": 70.0,
+        "pricePerKG": 200.0
+      },
+      {
+        "type": "rice",
+        "name": "Kolam",
+        "weight": 20.0,
+        "pricePerKG": 150.0
+      },
+      {
+        "type": "pulses",
+        "name": "Kidney Beans",
+        "weight": 30.0,
+        "pricePerKG": 50.0
+      },
+      {
+        "type": "pulses",
+        "name": "Black Gram",
+        "weight": 26.2,
+        "pricePerKG": 100.0
+      },
+      {
+        "type": "wheat",
+        "name": "Common Wheat",
+        "weight": 40.0,
+        "pricePerKG": 70.0
+      },
+      {
+        "type": "wheat",
+        "name": "Emmer Wheat",
+        "weight": 34.0,
+        "pricePerKG": 80.0
+      }
+    ],
+    [
+      {
+        "type": "rice",
+        "name": "Basmati Rice",
+        "weight": 32.0,
+        "pricePerKG": 200.0
+      },
+      {
+        "type": "rice",
+        "name": "Kolam",
+        "weight": 40.0,
+        "pricePerKG": 150.0
+      },
+      {
+        "type": "pulses",
+        "name": "Kidney Beans",
+        "weight": 5.5,
+        "pricePerKG": 50.0
+      },
+      {
+        "type": "pulses",
+        "name": "Black Gram",
+        "weight": 49.2,
+        "pricePerKG": 100.0
+      },
+      {
+        "type": "wheat",
+        "name": "Common Wheat",
+        "weight": 23.0,
+        "pricePerKG": 70.0
+      },
+      {
+        "type": "wheat",
+        "name": "Emmer Wheat",
+        "weight": 32.0,
+        "pricePerKG": 80.0
+      }
+    ]
+  ]
+}
