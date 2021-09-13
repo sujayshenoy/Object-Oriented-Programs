@@ -4,7 +4,7 @@
       "stockName": "Infosys",
       "stockSymbol": "$I",
       "sharePrice": 1500.0,
-      "numberOfShares": 1083
+      "numberOfShares": 1084
     },
     {
       "stockName": "RedBus",
@@ -22,7 +22,7 @@
       "stockName": "JetAirways",
       "stockSymbol": "$J",
       "sharePrice": 1000.0,
-      "numberOfShares": 120
+      "numberOfShares": 100
     }
   ]
 }
