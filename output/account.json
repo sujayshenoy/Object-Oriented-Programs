@@ -58,8 +58,39 @@
       ]
     },
     {
+      "stockSymbol": "$J",
+      "numberOfShares": 0,
+      "transactions": [
+        {
+          "State": "buy",
+          "numberOfShares": 20,
+          "DateTime": "Mon Sep 13 12:09:16 IST 2021"
+        },
+        {
+          "State": "buy",
+          "numberOfShares": 1,
+          "DateTime": "Mon Sep 13 12:17:21 IST 2021"
+        },
+        {
+          "State": "buy",
+          "numberOfShares": 1,
+          "DateTime": "Mon Sep 13 12:17:36 IST 2021"
+        },
+        {
+          "State": "sell",
+          "numberOfShares": 10,
+          "DateTime": "Mon Sep 13 13:06:38 IST 2021"
+        },
+        {
+          "State": "sell",
+          "numberOfShares": 12,
+          "DateTime": "Mon Sep 13 13:16:46 IST 2021"
+        }
+      ]
+    },
+    {
       "stockSymbol": "$I",
-      "numberOfShares": 124,
+      "numberOfShares": 301,
       "transactions": [
         {
           "State": "buy",
@@ -125,6 +156,31 @@
           "State": "sell",
           "numberOfShares": 7,
           "DateTime": "Mon Sep 13 00:40:35 IST 2021"
+        },
+        {
+          "State": "buy",
+          "numberOfShares": 1000,
+          "DateTime": "Mon Sep 13 12:11:18 IST 2021"
+        },
+        {
+          "State": "sell",
+          "numberOfShares": 1000,
+          "DateTime": "Mon Sep 13 13:04:07 IST 2021"
+        },
+        {
+          "State": "sell",
+          "numberOfShares": 124,
+          "DateTime": "Mon Sep 13 13:05:12 IST 2021"
+        },
+        {
+          "State": "buy",
+          "numberOfShares": 300,
+          "DateTime": "Mon Sep 13 13:06:19 IST 2021"
+        },
+        {
+          "State": "buy",
+          "numberOfShares": 1,
+          "DateTime": "Mon Sep 13 13:25:21 IST 2021"
         }
       ]
     }

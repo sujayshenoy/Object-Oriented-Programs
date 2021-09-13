@@ -2,9 +2,7 @@ package com.yml.commericaldataprocessing;
 
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import org.json.simple.JSONArray;
@@ -15,6 +13,14 @@ public class StockAccount implements StockProcessor {
     private final String STOCKS_FILE = "data/stocks.json";
 
     private String fileName;
+    public List<CompanyShare> getCompanyShares() {
+        return companyShares;
+    }
+
+    public void setCompanyShares(List<CompanyShare> companyShares) {
+        this.companyShares = companyShares;
+    }
+
     private JSONArray stocksData;
     List<CompanyShare> companyShares = new ArrayList<CompanyShare>();
 
@@ -29,6 +35,9 @@ public class StockAccount implements StockProcessor {
             JSONParser parser = new JSONParser();
             JSONObject obj = (JSONObject) parser.parse(reader);
             JSONArray companyShares = (JSONArray) obj.get("companyShares");
+            if (companyShares == null) {
+                return;
+            }
             Iterator<JSONObject> itr = companyShares.iterator();
             while (itr.hasNext()) {
                 CompanyShare companyShare = new CompanyShare();
@@ -53,8 +62,10 @@ public class StockAccount implements StockProcessor {
                 companySharesList.add(companyShare);
             }
             this.companyShares = companySharesList;
+            System.out.println("Data restored from file");
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Data not restored from file");
+            return;
         }
     }
 
@@ -97,7 +108,6 @@ public class StockAccount implements StockProcessor {
                 newCompanyShare = new CompanyShare(symbol);
             }
 
-            
             updateValue(symbol, amount, newCompanyShare ,Transaction.BUY);
         }
         
@@ -145,6 +155,13 @@ public class StockAccount implements StockProcessor {
             writer.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        if (state == Transaction.BUY) {
+            System.out.println("Buy Successfull");
+        }
+        else {
+            System.out.println("Sell Successfull");
         }
         
     }
@@ -222,7 +239,11 @@ public class StockAccount implements StockProcessor {
         for (CompanyShare companyShare : companyShares) {
             out.println("Share Symbol : " + companyShare.getStockSymbol());
             out.println("Number of Shares Holding : " + companyShare.getNumberOfShares());
-            out.println("Value of each share : " + valueof(companyShare)/companyShare.getNumberOfShares());
+            double valueEach = 0;
+            if (companyShare.getNumberOfShares() != 0) {
+                valueEach = valueof(companyShare) / companyShare.getNumberOfShares();
+            }
+            out.println("Value of each share : " + valueEach);
             out.println("Total Share Value : " + valueof(companyShare));
             out.println();
         }
