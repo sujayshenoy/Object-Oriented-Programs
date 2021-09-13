@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import com.yml.linkedlist.Node;
+import com.yml.stack.Stack;
 import com.yml.linkedlist.LinkedList;
 
 import org.json.simple.JSONArray;
@@ -23,6 +24,7 @@ public class StockAccount implements StockProcessor {
     private String fileName;
     private JSONArray stocksData;
     LinkedList<CompanyShare> companyShares = new LinkedList<CompanyShare>();
+    Stack<JSONObject> transactStack = new Stack<JSONObject>();
 
     StockAccount(String fileName) {
         this.fileName = fileName;
@@ -55,6 +57,7 @@ public class StockAccount implements StockProcessor {
             JSONParser parser = new JSONParser();
             JSONObject obj = (JSONObject) parser.parse(reader);
             JSONArray companyShares = (JSONArray) obj.get("companyShares");
+            JSONArray transStack = (JSONArray) obj.get("transactionStack");
             if (companyShares == null) {
                 return;
             }
@@ -82,6 +85,11 @@ public class StockAccount implements StockProcessor {
                 companySharesList.add(companyShare);
             }
             this.companyShares = companySharesList;
+
+            itr = transStack.iterator();
+            while (itr.hasNext()) {
+                transactStack.push(itr.next());
+            }
             System.out.println("Data restored from file");
         } catch (Exception e) {
             System.out.println("Data not restored from file");
@@ -168,6 +176,10 @@ public class StockAccount implements StockProcessor {
         long millis = System.currentTimeMillis();
         Date dateTime = new Date(millis);
         Transaction transaction = new Transaction(dateTime.toString(), numberOfShares, state);
+        JSONObject transact = new JSONObject();
+        transact.put("symbol", symbol);
+        transact.put("state", state);
+        transactStack.push(transact);
         companyShare.addTransaction(transaction);
         companyShares.add(companyShare);
 
@@ -270,9 +282,15 @@ public class StockAccount implements StockProcessor {
             obj.put("transactions", transactions);
             compShares.add(obj);
        }
+       
+        JSONArray transStack = new JSONArray();
+        for (Node<JSONObject> transact : transactStack) {
+            transStack.add(transact.getData());
+        }
 
         JSONObject finalJSON = new JSONObject();
         finalJSON.put("companyShares", compShares);
+        finalJSON.put("transactionStack", transStack);
 
        try {
            FileWriter writer = new FileWriter(filename);
