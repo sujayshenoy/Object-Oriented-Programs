@@ -1,5 +1,6 @@
 package com.yml.objectorientedprograms;
 
+import com.yml.commericaldataprocessing.CommericalDataProcessor;
 import com.yml.deckofcards.DeckOfCards;
 import com.yml.inventorymanager.InventoryManager;
 import com.yml.jsoninventory.JsonInventory;
@@ -10,6 +11,7 @@ class ObjectOrientedMain {
         // JsonInventory.run();
         // InventoryManager.run();
         // StockManagement.run();
-        DeckOfCards.run();
+        // DeckOfCards.run();
+        CommericalDataProcessor.run();
     }
 }
