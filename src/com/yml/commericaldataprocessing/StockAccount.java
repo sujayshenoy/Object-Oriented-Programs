@@ -9,14 +9,30 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+/**
+ * @author Sujay S Shenoy
+ * This class is used process stock account of a user
+ * allowing the user to buy or sell stocks
+ * and print stock reports
+ */
 public class StockAccount implements StockProcessor {
     private final String STOCKS_FILE = "data/stocks.json";
 
     private String fileName;
+    
+    /** 
+     * @return List<CompanyShare>
+     * getter method for companyShares list
+     */
     public List<CompanyShare> getCompanyShares() {
         return companyShares;
     }
 
+    
+    /** 
+     * @param companyShares
+     * Setter method for companyShares list
+     */
     public void setCompanyShares(List<CompanyShare> companyShares) {
         this.companyShares = companyShares;
     }
@@ -28,6 +44,10 @@ public class StockAccount implements StockProcessor {
         this.fileName = fileName;
     }
 
+    /**
+     * Method to restore all the data from a file
+     * that has been written to storage by save() method
+     */
     public void initializeAccountFromFile(){
         try {
             List<CompanyShare> companySharesList = new ArrayList<CompanyShare>();
@@ -69,6 +89,11 @@ public class StockAccount implements StockProcessor {
         }
     }
 
+    
+    /** 
+     * @return double
+     * Method to calculate total value of the all the stocks combined in the portfolio
+     */
     @Override
     public double valueof() {
         double value = 0;
@@ -78,6 +103,12 @@ public class StockAccount implements StockProcessor {
         return value;
     }
 
+    
+    /** 
+     * @param amount
+     * @param symbol
+     * Method to buy a stock from stocks.json
+     */
     @Override
     public void buy(int amount, String symbol) {
         readJSON();
@@ -113,6 +144,16 @@ public class StockAccount implements StockProcessor {
         
     }
 
+    
+    /** 
+     * @param symbol
+     * @param numberOfShares
+     * @param companyShare
+     * @param state
+     * Helper method to create/update companyShare object in companyShares List
+     * and also update stocks.json file
+     * during buy/sell situations
+     */
     private void updateValue(String symbol, long numberOfShares, CompanyShare companyShare, String state) {
         readJSON();
         //Add transaction to CompanyShare Object
@@ -166,6 +207,12 @@ public class StockAccount implements StockProcessor {
         
     }
 
+    
+    /** 
+     * @param amount
+     * @param symbol
+     * Method to Sell a stock in the portfolio
+     */
     @Override
     public void sell(int amount, String symbol) {
         readJSON();
@@ -197,6 +244,11 @@ public class StockAccount implements StockProcessor {
         }
     }
 
+    
+    /** 
+     * @param filename
+     * Method to save the current status of portfolio into a file in given path
+     */
     @Override
     public void save(String filename) {
         JSONArray compShares = new JSONArray();
@@ -230,7 +282,10 @@ public class StockAccount implements StockProcessor {
            e.printStackTrace();
        }       
     }
-
+    
+    /**
+     * Method to print the Current status of stocks in the portfolio
+     */
     @Override
     public void printReport() {
         PrintWriter out = new PrintWriter(System.out, true);
@@ -250,6 +305,12 @@ public class StockAccount implements StockProcessor {
         out.println("Total Value of portfolio: " + valueof());
     }
     
+    
+    /** 
+     * @param companyShare
+     * @return double
+     * Method to calculate total value of a particular company stock held.
+     */
     public double valueof(CompanyShare companyShare) {
         readJSON();
         Iterator<JSONObject> itr = stocksData.iterator();
@@ -263,7 +324,10 @@ public class StockAccount implements StockProcessor {
         
         return sharePrice * companyShare.getNumberOfShares();
     }
-
+    
+    /**
+     * Method to reads stocks.json file and sets the stocksData class variable used by other methods
+     */
     private void readJSON(){
         try{
             FileReader reader = new FileReader(STOCKS_FILE);

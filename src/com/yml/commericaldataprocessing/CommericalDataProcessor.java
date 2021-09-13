@@ -19,7 +19,7 @@ public class CommericalDataProcessor {
 
         Scanner in = new Scanner(System.in);
         PrintWriter out = new PrintWriter(System.out, true);
-        
+
         out.println("Welcome to the Stock broker program");
         out.println("Select an Option to proceed");
         while (true) {
@@ -46,7 +46,10 @@ public class CommericalDataProcessor {
             }
         }
     }
-
+    
+    /**
+     * Method used to provide Console UI to users for selling stocks
+     */
     private static void sellStocksMenu() {
         PrintWriter out = new PrintWriter(System.out, true);
         Scanner in = new Scanner(System.in);
@@ -80,6 +83,9 @@ public class CommericalDataProcessor {
         account.save(ACCOUNT_FILE);
     }
 
+    /**
+     * Method used to provide Console UI to users for buying stocks
+     */
     private static void buyStocksMenu() {
         PrintWriter out = new PrintWriter(System.out, true);
         Scanner in = new Scanner(System.in);
@@ -118,6 +124,12 @@ public class CommericalDataProcessor {
         account.save(ACCOUNT_FILE);
     }
     
+    
+    /** 
+     * @return JSONArray
+     * Method used to read JSON from stocks.json file
+     * and return the JSONArray
+     */
     private static JSONArray readJSON() {
         try {
             FileReader reader = new FileReader(STOCKS_FILE);
