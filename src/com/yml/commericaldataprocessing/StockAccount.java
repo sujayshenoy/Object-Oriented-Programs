@@ -3,11 +3,13 @@ package com.yml.commericaldataprocessing;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.*;
+import com.yml.linkedlist.Node;
+import com.yml.linkedlist.LinkedList;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import java.util.*;
 
 /**
  * @author Sujay S Shenoy
@@ -19,29 +21,27 @@ public class StockAccount implements StockProcessor {
     private final String STOCKS_FILE = "data/stocks.json";
 
     private String fileName;
-    
+    private JSONArray stocksData;
+    LinkedList<CompanyShare> companyShares = new LinkedList<CompanyShare>();
+
+    StockAccount(String fileName) {
+        this.fileName = fileName;
+    }
+
     /** 
      * @return List<CompanyShare>
      * getter method for companyShares list
      */
-    public List<CompanyShare> getCompanyShares() {
+    public LinkedList<CompanyShare> getCompanyShares() {
         return companyShares;
     }
-
     
     /** 
      * @param companyShares
      * Setter method for companyShares list
      */
-    public void setCompanyShares(List<CompanyShare> companyShares) {
+    public void setCompanyShares(LinkedList<CompanyShare> companyShares) {
         this.companyShares = companyShares;
-    }
-
-    private JSONArray stocksData;
-    List<CompanyShare> companyShares = new ArrayList<CompanyShare>();
-
-    StockAccount(String fileName) {
-        this.fileName = fileName;
     }
 
     /**
@@ -50,7 +50,7 @@ public class StockAccount implements StockProcessor {
      */
     public void initializeAccountFromFile(){
         try {
-            List<CompanyShare> companySharesList = new ArrayList<CompanyShare>();
+            LinkedList<CompanyShare> companySharesList = new LinkedList<CompanyShare>();
             FileReader reader = new FileReader(fileName);
             JSONParser parser = new JSONParser();
             JSONObject obj = (JSONObject) parser.parse(reader);
@@ -97,8 +97,8 @@ public class StockAccount implements StockProcessor {
     @Override
     public double valueof() {
         double value = 0;
-        for (CompanyShare companyShare : companyShares) {
-            value += valueof(companyShare);
+        for (Node<CompanyShare> companyShare : companyShares) {
+            value += valueof(companyShare.getData());
         }  
         return value;
     }
@@ -128,10 +128,11 @@ public class StockAccount implements StockProcessor {
         }
         else {
             CompanyShare newCompanyShare = null;
-            for (CompanyShare companyShare : companyShares) {
-                if (companyShare.getStockSymbol().equals(symbol)) {
-                    newCompanyShare = companyShare;
-                    companyShares.remove(companyShare);
+            for (Node<CompanyShare> companyShare : companyShares) {
+                CompanyShare compShare = companyShare.getData();
+                if (compShare.getStockSymbol().equals(symbol)) {
+                    newCompanyShare = compShare;
+                    companyShares.remove(compShare);
                     break;
                 }
             }
@@ -219,9 +220,9 @@ public class StockAccount implements StockProcessor {
         PrintWriter out = new PrintWriter(System.out);
         long numberOfShares = 0;
 
-        for (CompanyShare companyShare : companyShares) {
-            if (companyShare.getStockSymbol().equals(symbol)) {
-                numberOfShares = companyShare.getNumberOfShares();
+        for (Node<CompanyShare> companyShare : companyShares) {
+            if (companyShare.getData().getStockSymbol().equals(symbol)) {
+                numberOfShares = companyShare.getData().getNumberOfShares();
             }
         }
 
@@ -230,10 +231,10 @@ public class StockAccount implements StockProcessor {
         }
         else {
             CompanyShare selectedShare = null;
-            for (CompanyShare companyShare : companyShares) {
-                if (companyShare.getStockSymbol().equals(symbol)) {
-                    selectedShare = companyShare;
-                    companyShares.remove(companyShare);
+            for (Node<CompanyShare> companyShare : companyShares) {
+                if (companyShare.getData().getStockSymbol().equals(symbol)) {
+                    selectedShare = companyShare.getData();
+                    companyShares.remove(companyShare.getData());
                     break;
                 }
             }
@@ -252,11 +253,11 @@ public class StockAccount implements StockProcessor {
     @Override
     public void save(String filename) {
         JSONArray compShares = new JSONArray();
-        for (CompanyShare companyShare : companyShares) {
-            String stockSymbol = companyShare.getStockSymbol();
-            long numberOfShares = companyShare.getNumberOfShares();
+        for (Node<CompanyShare> companyShare : companyShares) {
+            String stockSymbol = companyShare.getData().getStockSymbol();
+            long numberOfShares = companyShare.getData().getNumberOfShares();
             JSONArray transactions = new JSONArray();
-            for (Transaction transaction : companyShare.getTransactions()) {
+            for (Transaction transaction : companyShare.getData().getTransactions()) {
                 JSONObject transactionObject = new JSONObject();
                 transactionObject.put("DateTime", transaction.getDateTime().toString());
                 transactionObject.put("numberOfShares", transaction.getNumberOfShares());
@@ -291,15 +292,15 @@ public class StockAccount implements StockProcessor {
         PrintWriter out = new PrintWriter(System.out, true);
         out.println("Stock Report");
         out.println("Holding Shares\n");
-        for (CompanyShare companyShare : companyShares) {
-            out.println("Share Symbol : " + companyShare.getStockSymbol());
-            out.println("Number of Shares Holding : " + companyShare.getNumberOfShares());
+        for (Node<CompanyShare> companyShare : companyShares) {
+            out.println("Share Symbol : " + companyShare.getData().getStockSymbol());
+            out.println("Number of Shares Holding : " + companyShare.getData().getNumberOfShares());
             double valueEach = 0;
-            if (companyShare.getNumberOfShares() != 0) {
-                valueEach = valueof(companyShare) / companyShare.getNumberOfShares();
+            if (companyShare.getData().getNumberOfShares() != 0) {
+                valueEach = valueof(companyShare.getData()) / companyShare.getData().getNumberOfShares();
             }
             out.println("Value of each share : " + valueEach);
-            out.println("Total Share Value : " + valueof(companyShare));
+            out.println("Total Share Value : " + valueof(companyShare.getData()));
             out.println();
         }
         out.println("Total Value of portfolio: " + valueof());

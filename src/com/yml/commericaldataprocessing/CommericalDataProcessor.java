@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import com.yml.linkedlist.Node;
+
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 
@@ -56,10 +58,10 @@ public class CommericalDataProcessor {
         
         out.println("Select the stock you want to Sell");
         int count = 1;
-        for (CompanyShare companyShare : account.getCompanyShares()) {
+        for (Node<CompanyShare> companyShare : account.getCompanyShares()) {
             out.println(count + ":");
-            out.println("Stock Symbol : " + companyShare.getStockSymbol());
-            out.println("Number Of Shares : " + companyShare.getNumberOfShares());
+            out.println("Stock Symbol : " + companyShare.getData().getStockSymbol());
+            out.println("Number Of Shares : " + companyShare.getData().getNumberOfShares());
             out.println();
             count++;
         }
@@ -72,7 +74,7 @@ public class CommericalDataProcessor {
 
         out.println("Enter the amount to sell");
         int amount = in.nextInt();
-        CompanyShare selectedStock = account.getCompanyShares().get(stockChoice - 1);
+        CompanyShare selectedStock = account.getCompanyShares().get(stockChoice - 1).getData();
         while (amount > (long) selectedStock.getNumberOfShares() || amount<=0)
         {
             out.println("Enter a valid amount");
