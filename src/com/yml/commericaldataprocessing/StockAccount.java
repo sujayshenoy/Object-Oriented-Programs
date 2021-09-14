@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import com.yml.linkedlist.Node;
+import com.yml.queue.Queue;
 import com.yml.stack.Stack;
 import com.yml.linkedlist.LinkedList;
 
@@ -25,6 +26,7 @@ public class StockAccount implements StockProcessor {
     private JSONArray stocksData;
     LinkedList<CompanyShare> companyShares = new LinkedList<CompanyShare>();
     Stack<JSONObject> transactStack = new Stack<JSONObject>();
+    Queue<String> dateTimeQueue = new Queue<String>();
 
     StockAccount(String fileName) {
         this.fileName = fileName;
@@ -58,9 +60,7 @@ public class StockAccount implements StockProcessor {
             JSONObject obj = (JSONObject) parser.parse(reader);
             JSONArray companyShares = (JSONArray) obj.get("companyShares");
             JSONArray transStack = (JSONArray) obj.get("transactionStack");
-            if (companyShares == null) {
-                return;
-            }
+            JSONArray dateTimeQ = (JSONArray) obj.get("dateTimeQueue");
             Iterator<JSONObject> itr = companyShares.iterator();
             while (itr.hasNext()) {
                 CompanyShare companyShare = new CompanyShare();
@@ -90,6 +90,12 @@ public class StockAccount implements StockProcessor {
             while (itr.hasNext()) {
                 transactStack.push(itr.next());
             }
+
+            Iterator<String> itr2 = dateTimeQ.iterator();
+            while (itr2.hasNext()) {
+                dateTimeQueue.enqueue(itr2.next());
+            }
+
             System.out.println("Data restored from file");
         } catch (Exception e) {
             System.out.println("Data not restored from file");
@@ -180,6 +186,7 @@ public class StockAccount implements StockProcessor {
         transact.put("symbol", symbol);
         transact.put("state", state);
         transactStack.push(transact);
+        dateTimeQueue.enqueue(dateTime.toString());
         companyShare.addTransaction(transaction);
         companyShares.add(companyShare);
 
@@ -288,9 +295,15 @@ public class StockAccount implements StockProcessor {
             transStack.add(transact.getData());
         }
 
+        JSONArray dateQueue = new JSONArray();
+        for (Node<String> dateTime : dateTimeQueue) {
+            dateQueue.add(dateTime.getData());
+        }
+
         JSONObject finalJSON = new JSONObject();
         finalJSON.put("companyShares", compShares);
         finalJSON.put("transactionStack", transStack);
+        finalJSON.put("dateTimeQueue", dateQueue);
 
        try {
            FileWriter writer = new FileWriter(filename);
