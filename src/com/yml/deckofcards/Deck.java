@@ -2,54 +2,63 @@ package com.yml.deckofcards;
 
 import java.util.*;
 
+import com.yml.linkedlist.Node;
+import com.yml.queue.Queue;
+
 public class Deck {
     Random random = new Random();
 	Set<Integer> cardNumber = new HashSet<Integer>();
 	String suit[] = {"Clubs", "Diamonds", "Hearts", "Spades"};
 	String rank[] = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
-    String cards[] = new String[53];
+    Card cards[] = new Card[52];
     
 	Deck() {
 
 	}
 	
 	public void init() {
+		for (int i = 0; i < 52; i++) {
+			cards[i] = new Card();
+		}
 		int count =0;
 		for(int i = 0; i < 4; i++) {
-			for(int j = 0; j<13; j++) {
-				cards[count] = suit[i]+""+rank[j];
+			for (int j = 0; j < 13; j++) {
+				cards[count].setSuit(suit[i]);
+				cards[count].setRank(rank[j]);
 				count ++;
 			}
 		}
 	}
 	
 	public int getRandom() {
-		int randomNumber = random.nextInt(53);
+		int randomNumber = random.nextInt(52);
 		while(cardNumber.contains(randomNumber)) {
-			randomNumber = random.nextInt(53);
+			randomNumber = random.nextInt(52);
 		}
 		cardNumber.add(randomNumber);
 		return randomNumber;
 	}
 	
-	public String[][] shuffle() {
-		String[][] playersArray = new String[4][9];
-		for(int i = 0; i < 4; i++) {
-			for(int j = 0 ; j < 9; j++) {
+	public void shuffle(Queue<Player> players) {
+		for (Node<Player> player : players) {
+			int count = 9;
+			while (count-- > 0) {
 				int randomNumber = getRandom();
-				playersArray[i][j] = cards[randomNumber];
+				player.getData().addCard(cards[randomNumber]);
 			}
 		}
-		return playersArray;
 	}
 	
-	public void printDeck(String[][] playersArray) {
-		for(int i=0; i<4; i++) {
-			System.out.print("Player "+(i+1)+" : ");
-			for(int j = 0 ; j < 9; j++) {
-				System.out.print(playersArray[i][j]+"     ");
+	public void printDeck(Queue<Player> players) {
+		int count = 1;
+		for (Node<Player> player : players) {
+			System.out.println("Player : " + count);
+			for (Node<Card> card : player.getData().getDeckOfCards()) {
+				System.out.println(card.getData() + " ");
 			}
 			System.out.println();
+			count++;
 		}
 	}
+	
 }
