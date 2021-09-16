@@ -11,7 +11,7 @@ class ObjectOrientedMain {
         // JsonInventory.run();
         // InventoryManager.run();
         // StockManagement.run();
-        // DeckOfCards.run();
-        CommericalDataProcessor.run();
+        DeckOfCards.run();
+        // CommericalDataProcessor.run();
     }
 }
